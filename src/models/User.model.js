@@ -2,21 +2,6 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    userType: {
-      type: String,
-      required: true,
-      enum: {
-        values: [
-          "Developer",
-          "Chairman",
-          "Secretary",
-          "Treasurer",
-          "Owner",
-          "Member",
-        ],
-        message: "{VALUE} is not supported",
-      },
-    },
     name: {
       type: String,
       required: true,
@@ -32,6 +17,11 @@ const userSchema = new mongoose.Schema(
     },
     passaword: {
       type: String,
+      required: true,
+    },
+    userType: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserType",
       required: true,
     },
   },
