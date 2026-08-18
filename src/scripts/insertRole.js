@@ -1,5 +1,7 @@
+import dotenv, { configDotenv } from "dotenv";
+dotenv.config();
 import { connectDB } from "../db/connectDB.js";
-import { UserType } from "../models/UserType.model";
+import { UserType } from "../models/UserType.model.js";
 
 export const insertRole = async () => {
   try {
@@ -23,3 +25,5 @@ export const insertRole = async () => {
     process.exit(1);
   }
 };
+
+insertRole();

@@ -1,43 +1,47 @@
 import { User } from "../models/User.model.js";
 import { UserType } from "../models/UserType.model.js";
+import { apiError } from "../utility/apiError.js";
+import { apiResponse } from "../utility/apiResponse.js";
 import { asyncHandler } from "../utility/asyncHandler.js";
 
 export const userRegister = asyncHandler(async (req, res) => {
   const { name, mobile, email, password, userType } = req.body;
-  if (!userType || !name || !mobile || !email) {
-    throw new Error(401, "All fields are required");
+  if (!userType || !name || !mobile || !email || !password) {
+    throw new apiError(401, "All fields are required");
   }
 
   const isUserExist = await User.findOne({ email });
 
   if (isUserExist) {
-    throw new Error(401, "User already exist");
+    throw new apiError(401, "User already exist");
   }
 
   const userRole = await UserType.findOne({ userRole: userType });
-  if (!userRole) {
-    console.log("Invalid user type");
-  }
+
   console.log("userRole", userRole);
+  if (!userRole) {
+    throw new apiError(401, "Invalid user type");
+  }
 
   const user = await User.create({
-    userType: userRoleId._id,
+    userType: userRole._id,
     name,
     mobile,
     email,
-    passaword,
+    password,
   });
 
-  console.log(user);
+  console.log("user", user);
 
-  res.status(201).json({ user });
+  res
+    .status(201)
+    .json(new apiResponse(201, `WellCome ${user.userRole.userRole}`, user));
 });
 
 export const userLogin = asyncHandler(async (req, res) => {
-  const { passaword, email } = req.body;
-  console.log(email);
+  const { password, email } = req.body;
 
-  if (!passaword || !email) {
+  if (!password || !email) {
     throw new Error(401, "All fields are required");
   }
 
@@ -46,15 +50,16 @@ export const userLogin = asyncHandler(async (req, res) => {
 
   if (!user) {
     console.log("user not found");
-    throw new Error(404, "User not found");
+    throw new apiError(404, "User not found");
   }
-  console.log("user" , user);
+
+  const verifyPassword = await user.isPasswordCorrect(password);
+
+  if (!verifyPassword) {
+    throw new apiError(401, "Incorrect Credentials");
+  }
 
   res
     .status(201)
-    .json({
-      success: true,
-      message: `WellCome ${user.userType.userRole}`,
-      user,
-    });
+    .json(new apiResponse(201, `WellCome ${user.userType.userRole}`, user));
 });
