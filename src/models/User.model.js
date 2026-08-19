@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { apiError } from "../utility/apiError";
 
 const userSchema = new mongoose.Schema(
   {
@@ -41,7 +42,7 @@ userSchema.pre("save", async function () {
     this.password = await bcrypt.hash(this.password, 10);
   } catch (error) {
     console.log(error);
-    throw new Error(401, "Password hashing fail");
+    throw new apiError(401, "Password hashing fail");
   }
 });
 
