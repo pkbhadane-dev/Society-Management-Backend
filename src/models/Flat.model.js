@@ -14,8 +14,9 @@ const flatSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: {
-        values: [Occupied, Rented, Vacant],
+        values: ["Occupied", "Rented", "Vacant"],
         message: "{VALUE} is not supported",
+        default: "Vacant",
       },
     },
     flatType: {
@@ -23,6 +24,10 @@ const flatSchema = new mongoose.Schema(
       required: true,
     },
     flatOwner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    flatTenant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },

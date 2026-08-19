@@ -35,7 +35,7 @@ export const userRegister = asyncHandler(async (req, res) => {
 
   res
     .status(201)
-    .json(new apiResponse(201, `WellCome ${user.userRole.userRole}`, user));
+    .json(new apiResponse(201, user, `WellCome ${user.userRole.userRole}`));
 });
 
 export const userLogin = asyncHandler(async (req, res) => {
@@ -61,5 +61,5 @@ export const userLogin = asyncHandler(async (req, res) => {
 
   res
     .status(201)
-    .json(new apiResponse(201, `WellCome ${user.userType.userRole}`, user));
+    .json(new apiResponse(201, user, `WellCome ${user.userType.userRole}`));
 });
