@@ -1,5 +1,5 @@
 import { Flat } from "../models/Flat.model";
-import { MaintenanceBill } from "../models/MaintenanceBillSchema";
+import { MaintenanceBill } from "../models/MaintenanceBill.model.js";
 import { apiError } from "../utility/apiError";
 import { apiResponse } from "../utility/apiResponse";
 import { asyncHandler } from "../utility/asyncHandler";

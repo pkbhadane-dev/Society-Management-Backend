@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
       ref: "UserType",
       required: true,
     },
+    society:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Society"
+    }
   },
   {
     timestamps: true,
