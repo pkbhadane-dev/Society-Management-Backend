@@ -22,15 +22,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    userStatus: {
+      type: String,
+      enum: {
+        values: ["Pending", "Approved", "Rejected"],
+        default: "Pending",
+      },
+    },
     userType: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "UserType",
       required: true,
     },
-    society:{
+    society: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Society"
-    }
+      ref: "Society",
+    },
   },
   {
     timestamps: true,
