@@ -1,11 +1,11 @@
 import mongoose, { get, mongo } from "mongoose";
-import { Society } from "../models/Society.model";
-import { User } from "../models/User.model";
-import { UserType } from "../models/UserType.model";
-import { apiError } from "../utility/apiError";
-import { apiResponse } from "../utility/apiResponse";
-import { asyncHandler } from "../utility/asyncHandler";
-import { Flat } from "../models/Flat.model";
+import { Society } from "../models/Society.model.js";
+import { User } from "../models/User.model.js";
+import { UserType } from "../models/UserType.model.js";
+import { apiError } from "../utility/apiError.js";
+import { apiResponse } from "../utility/apiResponse.js";
+import { asyncHandler } from "../utility/asyncHandler.js";
+import { Flat } from "../models/Flat.model.js";
 
 export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
   const {

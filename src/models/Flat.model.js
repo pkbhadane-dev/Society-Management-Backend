@@ -31,13 +31,17 @@ const flatSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    pendingUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     society: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Society",
     },
   },
   {
-    timeseries: true,
+    timestamps: true,
   },
 );
 
