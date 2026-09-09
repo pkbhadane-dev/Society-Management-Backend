@@ -2,6 +2,7 @@ import { Flat } from "../models/Flat.model.js";
 import { apiError } from "../utility/apiError.js";
 import { apiResponse } from "../utility/apiResponse.js";
 import { asyncHandler } from "../utility/asyncHandler.js";
+import { User } from "../models/User.model.js";
 
 export const flatRegisterRequest = asyncHandler(async (req, res) => {
   const { flatNumber, wing, flatType, society } = req.body;
@@ -31,9 +32,34 @@ export const flatRegisterRequest = asyncHandler(async (req, res) => {
   flat.pendingUser = userId;
   await flat.save();
 
-  res
-    .status(201)
-    .json(
-      new apiResponse(201, flat, "flat registraion submitted to secretary"),
-    );
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      society: society,
+      userStatus: "Pending",
+    },
+    {
+      new: true,
+    },
+  );
+
+  res.status(201).json(
+    new apiResponse(
+      201,
+      {
+        user: {
+          id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          status: updatedUser.userStatus,
+        },
+        flat: {
+          id: flat._id,
+          wing: flat.wing,
+          flatNumber: flat.flatNumber,
+        },
+      },
+      "flat registraion submitted to secretary",
+    ),
+  );
 });
