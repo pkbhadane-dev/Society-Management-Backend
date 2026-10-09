@@ -7,6 +7,7 @@ import { apiResponse } from "../utility/apiResponse.js";
 import { asyncHandler } from "../utility/asyncHandler.js";
 import { Flat } from "../models/Flat.model.js";
 
+// Society Registration with Admin/Secretary
 export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
   const {
     name,

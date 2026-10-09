@@ -6,7 +6,7 @@ import { User } from "../models/User.model.js";
 
 export const flatRegisterRequest = asyncHandler(async (req, res) => {
   const { flatNumber, wing, flatType, society } = req.body;
-  const userId = user._id;
+  const userId = req.user._id;
 
   if (!flatNumber || !wing || !society || !flatType) {
     throw new apiError(
@@ -63,3 +63,4 @@ export const flatRegisterRequest = asyncHandler(async (req, res) => {
     ),
   );
 });
+
