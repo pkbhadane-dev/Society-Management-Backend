@@ -69,14 +69,19 @@ export const approveFlatRequest = asyncHandler(async (req, res) => {
   const { flatId, action } = req.body;
 
   if (!flatId || !action) {
-    throw new apiError("FlatId and Action are required");
+    throw new apiError(400, "FlatId and Action are required");
   }
 
   const flat = await Flat.findById(flatId).populate("pendingUser");
+
+  if (!flat) {
+    throw new apiError(404, "Flat not found");
+  }
+
   const user = flat.pendingUser;
 
-  if (!flat || !user) {
-    throw new apiError("Flat and User are not found");
+  if (!user) {
+    throw new apiError(404, "Pending User are not found");
   }
 
   if (action === "reject") {
@@ -86,7 +91,9 @@ export const approveFlatRequest = asyncHandler(async (req, res) => {
     user.userStatus = "Rejected";
     await user.save();
 
-    res.status(200).json(new apiResponse(200, null, "Flat requsset Rejected"));
+    return res
+      .status(200)
+      .json(new apiResponse(200, null, "Flat requsset Rejected"));
   }
 
   // Approval flow with transaction
@@ -97,9 +104,9 @@ export const approveFlatRequest = asyncHandler(async (req, res) => {
     user.userStatus = "Approved";
     await user.save({ session });
 
-    const userType = await user.populate("userType");
+    await user.populate("userType");
 
-    if (userType.userRole === "Tenant") {
+    if (user.userType.userRole === "Tenant") {
       flat.flatStatus = "Rented";
       flat.flatTenant = user._id;
 
@@ -123,6 +130,6 @@ export const approveFlatRequest = asyncHandler(async (req, res) => {
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
-    throw new apiError(error.statusCode, error.message);
+    throw new apiError(error.statusCode || 500, error.message);
   }
 });

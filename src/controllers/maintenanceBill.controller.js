@@ -20,7 +20,7 @@ export const generateMaintenanceBill = asyncHandler(async (req, res) => {
     return {
       year,
       month,
-      totalAmpount: totalCharge,
+      totalAmount: totalCharge,
       charge,
       penalty,
       dueDate,
