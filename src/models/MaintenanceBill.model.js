@@ -10,6 +10,10 @@ const maintenanceBillSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    society: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Society",
+    },
     year: {
       type: String,
       required: true,

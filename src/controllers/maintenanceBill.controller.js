@@ -5,7 +5,7 @@ import { apiResponse } from "../utility/apiResponse";
 import { asyncHandler } from "../utility/asyncHandler";
 
 export const generateMaintenanceBill = asyncHandler(async (req, res) => {
-  const { year, month, charge, penalty, dueDate } = req.body;
+  const { year, month, charge, penalty, dueDate, societyId } = req.body;
 
   const occupiedFlats = await Flat.find({ flatStatus: { $ne: "Vacant" } });
 
@@ -26,6 +26,7 @@ export const generateMaintenanceBill = asyncHandler(async (req, res) => {
       dueDate,
       flat: flat._id,
       user: user,
+      society: societyId,
     };
   });
 
