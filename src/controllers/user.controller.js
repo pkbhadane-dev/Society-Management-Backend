@@ -18,8 +18,8 @@ const generateAccessAndRefreshToken = async (user) => {
 };
 
 export const userRegister = asyncHandler(async (req, res) => {
-  const { name, mobile, email, password, userType } = req.body;
-  if (!userType || !name || !mobile || !email || !password) {
+  const { name, mobile, email, password, userType, society } = req.body;
+  if (!userType || !name || !mobile || !email || !password || !society) {
     throw new apiError(401, "All fields are required");
   }
 
@@ -42,6 +42,7 @@ export const userRegister = asyncHandler(async (req, res) => {
     mobile,
     email,
     password,
+    society,
   });
 
   console.log("user", user);
