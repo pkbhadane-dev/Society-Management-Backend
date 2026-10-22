@@ -20,6 +20,8 @@ export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
     adminPassword,
   } = req.body;
 
+  console.log(req.body);
+
   /////////////////////
   // validation pending
   /////////////////////
@@ -68,6 +70,8 @@ export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
       { session },
     );
 
+    console.log("society", society);
+
     const [admin] = await User.create(
       [
         {
@@ -84,6 +88,8 @@ export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
 
     society.adminUser = admin._id;
     await society.save({ session });
+
+    console.log("admin", admin);
 
     const insertFlat = [];
 
