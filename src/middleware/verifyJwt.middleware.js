@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { apiError } from "../utility/apiError";
-import { User } from "../models/User.model";
+import { apiError } from "../utility/apiError.js";
+import { User } from "../models/User.model.js";
 export const verifyJwt = async (req, res, next) => {
   try {
     const token =
@@ -20,10 +20,10 @@ export const verifyJwt = async (req, res, next) => {
       throw new apiError(404, "User not found");
     }
 
-    return (req.user = user);
+    req.user = user;
     next();
   } catch (error) {
-    console.log(error.meessage);
+    console.log(error.message);
     next();
   }
 };

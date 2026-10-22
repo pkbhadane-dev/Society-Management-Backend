@@ -50,7 +50,7 @@ export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
   let calculatedTotalFlats = 0;
 
   wings.forEach((wing) => {
-    calculatedTotalFlats += wing.floor * wing.flatPerFloor;
+    calculatedTotalFlats += wing.floors * wing.flatsPerFloor;
   });
 
   const session = await mongoose.startSession();
@@ -94,8 +94,11 @@ export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
     const insertFlat = [];
 
     wings.forEach((wing) => {
-      for (let floor = 1; floor <= wing.floor; floor++) {
-        for (let flatNum = 1; flatNum <= wing.flatPerFloor; flatNum++) {
+      console.log("Current wing:", wing);
+      console.log("Floors:", wing.floors);
+      console.log("Flats per floor:", wing.flatsPerFloor);
+      for (let floor = 1; floor <= wing.floors; floor++) {
+        for (let flatNum = 1; flatNum <= wing.flatsPerFloor; flatNum++) {
           const flatNo = `${floor}${flatNum < 10 ? "0" + flatNum : flatNum} `;
 
           insertFlat.push({
@@ -107,6 +110,8 @@ export const registerSocietyWithAdmin = asyncHandler(async (req, res) => {
         }
       }
     });
+
+    console.log("insertFlat", insertFlat);
 
     await Flat.insertMany(insertFlat, { session });
 

@@ -22,5 +22,5 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/flat", flatRouter);
-app.use("api/v1/society", societyRouter);
+app.use("/api/v1/society", societyRouter);
 export default app;

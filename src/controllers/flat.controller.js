@@ -7,6 +7,8 @@ import mongoose from "mongoose";
 
 export const flatRegisterRequest = asyncHandler(async (req, res) => {
   const { flatNumber, wing, flatType, society } = req.body;
+  console.log(req.user);
+
   const userId = req.user._id;
 
   if (!flatNumber || !wing || !society || !flatType) {

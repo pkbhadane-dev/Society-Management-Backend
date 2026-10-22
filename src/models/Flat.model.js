@@ -21,7 +21,6 @@ const flatSchema = new mongoose.Schema(
     },
     flatType: {
       type: String,
-      required: true,
     },
     flatOwner: {
       type: mongoose.Schema.Types.ObjectId,
