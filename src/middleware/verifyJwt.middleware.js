@@ -3,8 +3,10 @@ import { apiError } from "../utility/apiError.js";
 import { User } from "../models/User.model.js";
 export const verifyJwt = async (req, res, next) => {
   try {
+    console.log("req.cookies", req.cookies);
+
     const token =
-      req.cookies.token || req.headers["authorization"].split(" ")[1];
+      req.cookies.accessToken || req.headers["authorization"].split(" ")[1];
 
     const verifyToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 

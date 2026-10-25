@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 export const flatRegisterRequest = asyncHandler(async (req, res) => {
   const { flatNumber, wing, flatType, society } = req.body;
-  console.log(req.user);
+  console.log("society", req.body);
 
   const userId = req.user._id;
 
@@ -19,7 +19,7 @@ export const flatRegisterRequest = asyncHandler(async (req, res) => {
   }
 
   const flat = await Flat.findOne({
-    society,
+    society: society, // society Id
     wing,
     flatNumber,
   });
